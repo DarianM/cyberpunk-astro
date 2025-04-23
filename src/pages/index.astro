@@ -256,11 +256,11 @@ import Layout from '../layouts/Layout.astro';
     
     const monetizationLinks = document.querySelector<HTMLLinkElement>(
     'link[rel=monetization]'
-  )
-  if (monetizationLinks && monetizationLinks.relList.supports('monetization')) {
-    console.log('Monetization is supported');
-    streamStats.style.display = 'block';
-  }
+    )
+    if (monetizationLinks && monetizationLinks.relList.supports('monetization')) {
+      console.log('Monetization is supported');
+      streamStats.style.display = 'block';
+    }
 
     try {
       if (ev && ev.amountSent) {
