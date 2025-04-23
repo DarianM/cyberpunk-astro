@@ -32,23 +32,45 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <section class="factions">
+    <section class="factions" id="premium-content" style="display: none;">
       <div class="container">
-        <h2 class="section-title neon-text">TOOLS</h2>
+        <h2 class="section-title neon-text">BONUS CONTENT UNLOCKED</h2>
+        <div class="unlocked-banner">
+          <span class="glitch-text">WEBMONETIZATION ACTIVATED</span>
+          <p>You've contributed enough to unlock my additional content!</p>
+        </div>
         
         <div class="faction-list">
           <div class="faction cyberpunk-border">
-            <h3>TOOLS</h3>
-            <p>tools</p>
+            <h3 class="neon-pink">Unlock Additional Content</h3>
+            <p>Supporters get supporter-only chapters through Web Monetization</p>
+          </div>
+          
+          <div class="faction cyberpunk-border">
+            <h3 class="neon-pink">Remove Ads for Supporters</h3>
+            <p>Detect monetized users and automatically hide ads. Show a thanks message instead</p>
           </div>
         </div>
       </div>
     </section>
+    
+    <div id="unlock-notification" class="notification-container">
+      <div class="notification cyberpunk-border">
+        <div class="notification-header">
+          <span class="neon-yellow">SYSTEM ALERT</span>
+          <button id="close-notification" class="close-btn">×</button>
+        </div>
+        <div class="notification-content">
+          <p>PREMIUM CONTENT UNLOCKED</p>
+          <p class="notification-details">Your Web Monetization payment has reached the threshold!</p>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer>
     <div class="container">
-      <p class="small-text">A fictional Cyberpunk 2077 inspired site.</p>
+      <p class="small-text">@DarianM</p>
     </div>
   </footer>
 </Layout>
@@ -70,7 +92,7 @@ import Layout from '../layouts/Layout.astro';
   }
   
   /** Function to add a new event to the log */
-  function addEventToLog(totalAmount: string, amount: string) {
+  function addEventToLog(totalAmount: string, amount: string, totalAmountValue: number) {
     if (!eventLogEl) {
       alert('Event log element not found');
       return;
@@ -108,8 +130,41 @@ import Layout from '../layouts/Layout.astro';
     }, 1000);
 
     firstLogTimestamp.textContent = generateTimestamp();
-    firstLogText.textContent = `TOTAL RECEIVED: ${totalAmount}`;
+    firstLogText.textContent = `You've supported me: ${totalAmount} so far!`;
+    firstLogText.classList.add('total-received');
+    
+    // Check if content should be unlocked (threshold = 2)
+    const premiumContent = document.getElementById('premium-content');
+    const unlockNotification = document.getElementById('unlock-notification');
+    
+    if (totalAmountValue >= 2 && premiumContent && premiumContent.style.display === 'none') {
+      // Show premium content
+      premiumContent.style.display = 'block';
+      
+      // Show notification
+      if (unlockNotification) {
+        unlockNotification.classList.add('visible');
+        
+        // Auto-hide notification after 10 seconds
+        setTimeout(() => {
+          unlockNotification.classList.remove('visible');
+        }, 3500);
+      }
+      
+      // Scroll to premium content with animation
+      setTimeout(() => {
+        premiumContent.scrollIntoView({ behavior: 'smooth' });
+      }, 1000);
+    }
   }
+  
+  // Close notification button
+  document.getElementById('close-notification')?.addEventListener('click', () => {
+    const unlockNotification = document.getElementById('unlock-notification');
+    if (unlockNotification) {
+      unlockNotification.classList.remove('visible');
+    }
+  });
   
   // click event
   // addEventBtn.addEventListener('click', addEventToLog);
@@ -131,7 +186,7 @@ window.addEventListener('monetization', (ev) => {
     { style: 'currency', currency: currency },
   ).format(amount);
 
-  addEventToLog(`${currency} ${formattedTotalAmount}`, `${currency} ${formattedAmount}`);
+  addEventToLog(`${currency} ${formattedTotalAmount}`, `${formattedAmount}`, totalAmountReceived);
 });
 </script>
 
@@ -273,6 +328,17 @@ window.addEventListener('monetization', (ev) => {
     color: rgba(255, 255, 255, 0.9);
   }
   
+  .log-text.total-received {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: var(--neon-blue);
+    /* text-shadow: 0 0 5px var(--neon-yellow), 0 0 10px rgba(252, 238, 9, 0.5); */
+    padding: 5px 10px;
+    background-color: rgba(252, 238, 9, 0.1);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  
   .terminal-input {
     padding: 15px;
     border-top: 1px solid var(--cyberpunk-red);
@@ -329,6 +395,79 @@ window.addEventListener('monetization', (ev) => {
     opacity: 0.7;
   }
   
+  /* Notification */
+  .notification-container {
+    position: fixed;
+    right: -400px;
+    top: 20px;
+    width: 350px;
+    z-index: 1000;
+    transition: right 0.5s ease-in-out;
+  }
+  
+  .notification-container.visible {
+    right: 20px;
+  }
+  
+  .notification {
+    background-color: var(--cyberpunk-darker);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+    overflow: hidden;
+  }
+  
+  .notification-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--cyberpunk-red);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--neon-yellow);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .notification-content {
+    padding: 15px;
+  }
+  
+  .notification-content p {
+    margin: 5px 0;
+  }
+  
+  .notification-details {
+    color: var(--neon-blue);
+    font-size: 0.9em;
+  }
+  
+  /* Unlocked banner */
+  .unlocked-banner {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: rgba(255, 0, 85, 0.2);
+    border: 1px solid var(--cyberpunk-red);
+    animation: pulse 2s infinite alternate;
+  }
+  
+  .unlocked-banner p {
+    margin-top: 10px;
+    color: var(--neon-blue);
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 5px var(--cyberpunk-red);
+    }
+    100% {
+      box-shadow: 0 0 20px var(--cyberpunk-red);
+    }
+  }
+
   /* Media Queries */
   @media (max-width: 768px) {
     h1 {
@@ -351,6 +490,11 @@ window.addEventListener('monetization', (ev) => {
     
     .section-title {
       font-size: 2rem;
+    }
+    
+    .notification-container {
+      width: 90%;
+      max-width: 350px;
     }
   }
 </style>
