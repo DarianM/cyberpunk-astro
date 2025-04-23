@@ -133,32 +133,27 @@ import Layout from '../layouts/Layout.astro';
     firstLogText.textContent = `You've supported me: ${totalAmount} so far!`;
     firstLogText.classList.add('total-received');
     
-    // Check if content should be unlocked (threshold = 2)
     const premiumContent = document.getElementById('premium-content');
     const unlockNotification = document.getElementById('unlock-notification');
     
     if (totalAmountValue >= 2 && premiumContent && premiumContent.style.display === 'none') {
-      // Show premium content
+      // show premium content
       premiumContent.style.display = 'block';
       
-      // Show notification
       if (unlockNotification) {
         unlockNotification.classList.add('visible');
         
-        // Auto-hide notification after 10 seconds
         setTimeout(() => {
           unlockNotification.classList.remove('visible');
         }, 3500);
       }
       
-      // Scroll to premium content with animation
       setTimeout(() => {
         premiumContent.scrollIntoView({ behavior: 'smooth' });
       }, 1000);
     }
   }
   
-  // Close notification button
   document.getElementById('close-notification')?.addEventListener('click', () => {
     const unlockNotification = document.getElementById('unlock-notification');
     if (unlockNotification) {
@@ -171,23 +166,23 @@ import Layout from '../layouts/Layout.astro';
 
   let totalAmountReceived = 0;
 
-window.addEventListener('monetization', (ev) => {
-  console.log(ev);
-  const amountSent: string = (ev as any).amountSent.value;
-  const currency: string = (ev as any).amountSent.currency;
-  const amount = Number(amountSent);
-  totalAmountReceived = Number(totalAmountReceived) + amount;
-  const formattedTotalAmount = new Intl.NumberFormat(
-    undefined,
-    { style: 'currency', currency: currency },
-  ).format(totalAmountReceived);
-  const formattedAmount = new Intl.NumberFormat(
-    undefined,
-    { style: 'currency', currency: currency },
-  ).format(amount);
+  window.addEventListener('monetization', (ev) => {
+    console.log(ev);
+    const amountSent: string = (ev as any).amountSent.value;
+    const currency: string = (ev as any).amountSent.currency;
+    const amount = Number(amountSent);
+    totalAmountReceived = Number(totalAmountReceived) + amount;
+    const formattedTotalAmount = new Intl.NumberFormat(
+      undefined,
+      { style: 'currency', currency: currency },
+    ).format(totalAmountReceived);
+    const formattedAmount = new Intl.NumberFormat(
+      undefined,
+      { style: 'currency', currency: currency },
+    ).format(amount);
 
-  addEventToLog(`${currency} ${formattedTotalAmount}`, `${formattedAmount}`, totalAmountReceived);
-});
+    addEventToLog(`${currency} ${formattedTotalAmount}`, `${formattedAmount}`, totalAmountReceived);
+  });
 </script>
 
 <style>
