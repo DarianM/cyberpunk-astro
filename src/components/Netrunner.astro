@@ -1,0 +1,80 @@
+---
+interface Props {
+  name: string;
+  skill: string;
+  level: number;
+}
+
+const { name, skill, level } = Astro.props;
+---
+
+<div class="netrunner cyberpunk-border">
+  <div class="netrunner-header">
+    <h3>{name}</h3>
+    <span class="skill-badge">{skill}</span>
+  </div>
+  <div class="skill-level">
+    <div class="skill-track">
+      <div class="skill-progress" style={`width: ${level * 10}%`}></div>
+    </div>
+    <span class="level-text">LVL {level}</span>
+  </div>
+</div>
+
+<style>
+  .netrunner {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .netrunner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .netrunner h3 {
+    margin: 0;
+    color: var(--neon-blue);
+    font-size: 1.2rem;
+  }
+  
+  .skill-badge {
+    background-color: var(--cyberpunk-red);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  
+  .skill-level {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .skill-track {
+    flex: 1;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .skill-progress {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+    left: 0;
+    top: 0;
+  }
+  
+  .level-text {
+    font-size: 0.9rem;
+    color: var(--neon-yellow);
+    min-width: 50px;
+    text-align: right;
+  }
+</style>

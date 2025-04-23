@@ -1,0 +1,356 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DarianM">
+  <div class="noise"></div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="glitch-text">WEB MONETIZATION</h1>
+          <p class="subtitle neon-text">PAY THE WEB FORWARD</p>
+          
+          <div class="terminal-box cyberpunk-border">
+            <div class="terminal-header">
+              <span class="neon-pink">MONETIZATION EVENTS</span>
+              <span class="terminal-id">//:ILF_EVENT_LOG_2025</span>
+            </div>
+            
+            <div class="terminal-content" id="event-log">
+              <div class="log-entry">
+                <span class="log-timestamp">[2077:06:21:14:08:32]</span>
+                <span class="log-text"></span>
+              </div>
+            </div>
+            
+            <div class="terminal-input">
+              <button class="btn-cyberpunk" id="add-event">MONETIZATION EVENTS</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="factions">
+      <div class="container">
+        <h2 class="section-title neon-text">TOOLS</h2>
+        
+        <div class="faction-list">
+          <div class="faction cyberpunk-border">
+            <h3>TOOLS</h3>
+            <p>tools</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p class="small-text">A fictional Cyberpunk 2077 inspired site.</p>
+    </div>
+  </footer>
+</Layout>
+
+<script>
+  const eventLogEl = document.getElementById('event-log');
+  const addEventBtn = document.getElementById('add-event');
+  
+  function generateTimestamp() {
+    const now = new Date();
+    const year = 2025;
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    return `[${year}/${month}/${day}  ${hours}:${minutes}:${seconds}]`;
+  }
+  
+  /** Function to add a new event to the log */
+  function addEventToLog(totalAmount: string, amount: string) {
+    if (!eventLogEl) {
+      alert('Event log element not found');
+      return;
+    }
+
+    // get the first log entry's timestamp and text elements
+    const firstLogTimestamp = document.querySelector('.log-entry .log-timestamp');
+    const firstLogText = document.querySelector('.log-entry .log-text');
+
+    const logEntry = document.createElement('div');
+    logEntry.className = 'log-entry new-entry';
+    
+    const timestamp = document.createElement('span');
+    timestamp.style.display = 'inline-block';
+    timestamp.style.width = '210px';
+    timestamp.style.marginRight = '10px';
+    timestamp.style.color = '#fcee09'; // hard-coded styling
+    timestamp.textContent = generateTimestamp();
+    
+    const logText = document.createElement('span');
+    logText.className = 'log-text';
+    logText.textContent = amount;
+    
+    logEntry.appendChild(timestamp);
+    logEntry.appendChild(logText);
+    
+    eventLogEl.appendChild(logEntry);
+    
+    // auto-scroll to bottom
+    eventLogEl.scrollTop = eventLogEl.scrollHeight;
+    
+    // remove 'new-entry' class after animation completes
+    setTimeout(() => {
+      logEntry.classList.remove('new-entry');
+    }, 1000);
+
+    firstLogTimestamp.textContent = generateTimestamp();
+    firstLogText.textContent = `TOTAL RECEIVED: ${totalAmount}`;
+  }
+  
+  // click event
+  // addEventBtn.addEventListener('click', addEventToLog);
+
+  let totalAmountReceived = 0;
+
+window.addEventListener('monetization', (ev) => {
+  console.log(ev);
+  const amountSent: string = (ev as any).amountSent.value;
+  const currency: string = (ev as any).amountSent.currency;
+  const amount = Number(amountSent);
+  totalAmountReceived = Number(totalAmountReceived) + amount;
+  const formattedTotalAmount = new Intl.NumberFormat(
+    undefined,
+    { style: 'currency', currency: currency },
+  ).format(totalAmountReceived);
+  const formattedAmount = new Intl.NumberFormat(
+    undefined,
+    { style: 'currency', currency: currency },
+  ).format(amount);
+
+  addEventToLog(`${currency} ${formattedTotalAmount}`, `${currency} ${formattedAmount}`);
+});
+</script>
+
+<style>
+  main {
+    flex: 1;
+  }
+  
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(135deg, rgba(15, 15, 27, 0.9) 0%, rgba(7, 7, 18, 0.95) 100%);
+    padding: 50px 0;
+    overflow: hidden;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+    z-index: 1;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+  }
+  
+  h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    letter-spacing: 3px;
+  }
+  
+  /* Terminal Box Styling */
+  .terminal-box {
+    max-width: 700px;
+    margin: 40px auto 0;
+    background-color: rgba(7, 7, 12, 0.9);
+    border: 2px solid var(--cyberpunk-red);
+    text-align: left;
+    font-family: 'Rajdhani', monospace;
+  }
+  
+  .terminal-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--cyberpunk-red);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    background-color: rgba(255, 0, 85, 0.2);
+  }
+  
+  .terminal-id {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: monospace;
+  }
+  
+  .terminal-content {
+    padding: 15px;
+    max-height: 350px;
+    overflow-y: auto;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    
+    /* Custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon-blue) rgba(7, 7, 12, 0.9);
+  }
+  
+  .terminal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .terminal-content::-webkit-scrollbar-track {
+    background: rgba(7, 7, 12, 0.9);
+  }
+  
+  .terminal-content::-webkit-scrollbar-thumb {
+    background-color: var(--neon-blue);
+    border-radius: 20px;
+  }
+  
+  .log-entry {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.9;
+    transition: all 0.5s ease;
+  }
+  
+  .log-entry.new-entry {
+    background-color: rgba(255, 0, 160, 0.2);
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    100% {
+      opacity: 0.9;
+      transform: translateY(0);
+    }
+  }
+  
+  .log-timestamp {
+    color: var(--neon-blue);
+    white-space: nowrap;
+    font-weight: 600;
+    display: inline-block;
+    width: 210px;
+  }
+  
+  .log-text {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .terminal-input {
+    padding: 15px;
+    border-top: 1px solid var(--cyberpunk-red);
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Factions Section */
+  .factions {
+    padding: 100px 0;
+    background-color: var(--cyberpunk-darker);
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+  
+  .faction-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  
+  .faction {
+    padding: 30px;
+    transition: all 0.3s ease;
+  }
+  
+  .faction:hover {
+    box-shadow: 0 0 15px var(--cyberpunk-red);
+  }
+  
+  .faction h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--neon-yellow);
+  }
+  
+  /* Footer */
+  footer {
+    background-color: var(--cyberpunk-darker);
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid var(--cyberpunk-red);
+  }
+  
+  .small-text {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    opacity: 0.7;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+    }
+    
+    .log-timestamp {
+      display: block;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    
+    .faction-list {
+      grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+</style>

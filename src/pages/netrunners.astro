@@ -1,0 +1,176 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Netrunner from '../components/Netrunner.astro';
+---
+
+<Layout title="CYBERPUNK 2077 - Netrunners">
+  <div class="noise"></div>
+  <main>
+    <section class="netrunner-hero">
+      <div class="container">
+        <h1 class="glitch-text">NETRUNNERS</h1>
+        <p class="subtitle neon-text">ELITE HACKERS OF NIGHT CITY</p>
+      </div>
+    </section>
+
+    <section class="netrunner-list">
+      <div class="container">
+        <div class="grid">
+          <Netrunner name="Alt Cunningham" skill="ICE Breaking" level={10} />
+          <Netrunner name="T-Bug" skill="Network Infiltration" level={8} />
+          <Netrunner name="Brigitte" skill="Backdoor Engineering" level={9} />
+          <Netrunner name="Spider Murphy" skill="Data Mining" level={7} />
+          <Netrunner name="Rache Bartmoss" skill="Virus Creation" level={10} />
+          <Netrunner name="Nix" skill="System Exploitation" level={6} />
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="container">
+        <div class="cyberpunk-border">
+          <h2 class="neon-pink">NETRUNNING 101</h2>
+          <p>Netrunners are specialized hackers who navigate the dangerous depths of cyberspace, breaking through corporate firewalls and ICE (Intrusion Countermeasures Electronics) to steal data, sabotage systems, or gather intelligence.</p>
+          <p>Using specialized cyberware called a "cyberdeck" and neural implants, a netrunner can jack into networks and navigate them with their consciousness, perceiving virtual data as a sensory landscape.</p>
+          <p>The most skilled netrunners can manipulate any electronic system, from security cameras to automated turrets, making them invaluable assets for any operation that requires stealth or access to protected areas.</p>
+          
+          <div class="cyberdeck-info">
+            <h3>COMMON CYBERDECKS</h3>
+            <ul>
+              <li><span class="highlight">Militech Paraline</span> - Entry-level deck with modest RAM</li>
+              <li><span class="highlight">Fuyutsuki Tinkerer</span> - Mid-range deck with excellent buffer management</li>
+              <li><span class="highlight">Arasaka Mk.4</span> - High-end corporate deck with advanced ICE-breaking capabilities</li>
+              <li><span class="highlight">Raven Microcyber</span> - Black market deck, untraceable but unstable</li>
+              <li><span class="highlight">NetWatch Netdriver</span> - Professional-grade deck used by NetWatch agents</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2077 NIGHT CITY ENTERPRISES</p>
+      <p class="small-text">A fictional Cyberpunk 2077 inspired site. All trademarks belong to CD Projekt Red.</p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  main {
+    flex: 1;
+  }
+  
+  .netrunner-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(0deg, var(--cyberpunk-dark) 0%, var(--cyberpunk-darker) 100%);
+    padding: 50px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .netrunner-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300f0ff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: 0;
+  }
+  
+  .netrunner-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    letter-spacing: 3px;
+  }
+  
+  .netrunner-list {
+    padding: 80px 0;
+    background-color: var(--cyberpunk-dark);
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+  }
+  
+  .info-section {
+    padding: 80px 0;
+    background-color: var(--cyberpunk-darker);
+  }
+  
+  .info-section h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+  }
+  
+  .info-section p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .cyberdeck-info {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .cyberdeck-info h3 {
+    font-size: 1.4rem;
+    color: var(--neon-yellow);
+    margin-bottom: 15px;
+  }
+  
+  .cyberdeck-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cyberdeck-info li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .highlight {
+    color: var(--neon-blue);
+    font-weight: bold;
+  }
+  
+  footer {
+    background-color: var(--cyberpunk-darker);
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid var(--cyberpunk-red);
+  }
+  
+  .small-text {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    opacity: 0.7;
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .netrunner-hero {
+      min-height: 30vh;
+    }
+  }
+</style>
