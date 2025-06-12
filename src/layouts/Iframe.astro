@@ -1,0 +1,76 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <link
+      rel="monetization"
+      href="https://ilp.interledger-test.dev/sid-mxn-1"
+    />
+    <link
+      rel="monetization"
+      href="https://ilp.interledger-test.dev/sid-zar-1"
+    />
+  </head>
+  <body>
+    <!-- <iframe src="http://localhost:3001" allow="monetization"></iframe> -->
+
+    <script>
+      window.addEventListener('monetization', (ev) => {
+        console.log(window.location.host, ev.target, ev.amountSent);
+      });
+
+      if (window.location.host.includes(':4321')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'http://localhost:3001';
+        iframe.allow = 'monetization';
+
+        const iframe2 = document.createElement('iframe');
+        iframe2.src = 'http://localhost:3002';
+        iframe2.allow = 'monetization';
+
+        document.body.appendChild(iframe);
+        document.body.appendChild(iframe2);
+      }
+    </script>
+
+    <style is:global>
+      :root {
+        --neon-yellow: #fcee09;
+        --neon-blue: #00f0ff;
+        --neon-pink: #ff00a0;
+        --cyberpunk-red: #ff0055;
+        --cyberpunk-dark: #0f0f1b;
+        --cyberpunk-darker: #070712;
+        --glitch-duration: 3s;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      iframe {
+        background-color: var(--neon-yellow);
+      }
+      
+      html {
+        font-family: 'Rajdhani', sans-serif;
+        background-color: var(--cyberpunk-darker);
+        color: white;
+        overflow-x: hidden;
+      }
+      </style>
+  </body>
+</html>

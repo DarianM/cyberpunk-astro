@@ -16,10 +16,13 @@ const { title } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <!-- <link rel="monetization" href="https://ilp.interledger-test.dev/darianeur"> -->
+    <!-- <link rel="monetization" href="https://ilp.interledger-test.dev/darianeur">
+    <link rel="monetization" href="https://ilp.interledger-test.dev/darianusd"> -->
   </head>
   <body>
-    <script id="wmt-init-script" type="module" src="https://cdn.webmonetization.org/init.js?wa=ilp.interledger-test.dev/darianusd&tag=default&types=banner"></script>
+      <script id="wmt-init-script" type="module" src="https://webmonetization.org/init.js?wa=ilp.interledger-test.dev/darianeur&tag=default&types=banner|widget"></script>
+     <!-- <script id="wmt-init-script" type="module" src="http://localhost:5173/init.js?wa=https://ilp.interledger-test.dev/fba6a82b&tag=default&types=banner|widget"></script> -->
+     <!-- FIX THE ABOVE BUG USING ANCA'S WALLET -->
     <slot />
     <style is:global>
       :root {
@@ -186,5 +189,14 @@ const { title } = Astro.props;
         }
       }
     </style>
+
+    <script>
+      const params: { [key: string]: string } = {};
+      new URLSearchParams(window.location.search).forEach((value, key) => {
+        params[key] = value;
+      });
+      window.opener.postMessage({type: 'GRANT_INTERACTION', ...params}, '*');
+      console.log('###Test message urlParams: ', new URLSearchParams(window.location.search).toString());
+    </script>
   </body>
 </html>
