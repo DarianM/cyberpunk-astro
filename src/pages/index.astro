@@ -8,8 +8,8 @@ import Layout from '../layouts/Layout.astro';
     <section class="hero">
       <div class="container">
         <div class="hero-content">
-          <h1 class="glitch-text">WEB MONETIZATION</h1>
-          <p class="subtitle neon-text">PAY THE WEB FORWARD</p>
+          <!-- <h1 class="glitch-text">WEB MONETIZATION</h1> -->
+          <h1 class="subtitle neon-text">PAY THE WEB FORWARD</h1>
           
           <div class="terminal-box cyberpunk-border">
             <div class="terminal-header">
@@ -32,41 +32,9 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <section class="factions" id="premium-content" style="display: none;">
-      <div class="container">
-        <h2 class="section-title neon-text">BONUS CONTENT UNLOCKED</h2>
-        <div class="unlocked-banner">
-          <span class="glitch-text">WEBMONETIZATION ACTIVATED</span>
-          <p>You've contributed enough to unlock my additional content!</p>
-        </div>
-        
-        <div class="faction-list">
-          <div class="faction cyberpunk-border">
-            <h3 class="neon-pink">Unlock Additional Content</h3>
-            <p>Supporters get supporter-only chapters through Web Monetization without Subscriptions</p>
-          </div>
-          
-          <div class="faction cyberpunk-border">
-            <h3 class="neon-pink">Remove Ads for Supporters</h3>
-            <p>Detect monetized users and automatically hide ads. Show a thanks message instead</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
     
-    <div id="unlock-notification" class="notification-container">
-      <div class="notification cyberpunk-border">
-        <div class="notification-header">
-          <span class="neon-yellow">SYSTEM ALERT</span>
-          <button id="close-notification" class="close-btn">×</button>
-        </div>
-        <div class="notification-content">
-          <p>PREMIUM CONTENT UNLOCKED</p>
-          <p class="notification-details">Your Web Monetization payment has reached the threshold!</p>
-        </div>
-      </div>
-    </div>
-    
+
     <div id="thankyou-notification" class="notification-container">
       <div class="notification cyberpunk-border">
         <div class="notification-header">
@@ -75,41 +43,21 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="notification-content">
           <p>THANK YOU</p>
-          <p class="notification-details">Your contribution helps keep this network alive.</p>
         </div>
       </div>
     </div>
     
-    <div id="stream-stats" class="stats-container">
-      <div class="stats-panel cyberpunk-border">
-        <div class="stats-header">
-          <span class="neon-blue">MONETIZATION STREAM</span>
-        </div>
-        <div class="stats-content">
-          <div class="stat-item">
-            <span class="stat-label">TOTAL VIEW TIME</span>
-            <span id="stream-time" class="stat-value">00:00:00</span>
-          </div>
-          <div class="progress-bar">
-            <div id="unlock-progress" class="progress-fill" style="width: 0%"></div>
-            <span class="progress-text">DONATION GOAL: <span id="progress-percentage">0%</span></span>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </main>
 
   <footer>
-    <div class="container">
       <p class="small-text">@DarianM</p>
-    </div>
   </footer>
 </Layout>
 
 <script>
   const eventLogEl = document.getElementById('event-log');
   const addEventBtn = document.getElementById('add-event');
-  const streamStats = document.getElementById('stream-stats');
   
   function generateTimestamp() {
     const now = new Date();
@@ -161,38 +109,16 @@ import Layout from '../layouts/Layout.astro';
       logEntry.classList.remove('new-entry');
     }, 1000);
 
-    firstLogTimestamp.textContent = generateTimestamp();
-    firstLogText.textContent = `supported me ${totalAmount} so far!`;
-    firstLogText.classList.add('total-received');
-    
-    const premiumContent = document.getElementById('premium-content');
-    const unlockNotification = document.getElementById('unlock-notification');
-    
-    if (totalAmountValue >= 2 && premiumContent && premiumContent.style.display === 'none') {
-      // show premium content
-      premiumContent.style.display = 'block';
-      
-      if (unlockNotification) {
-        unlockNotification.classList.add('visible');
-        
-        setTimeout(() => {
-          unlockNotification.classList.remove('visible');
-        }, 3500);
-      }
-      
-      setTimeout(() => {
-        premiumContent.scrollIntoView({ behavior: 'smooth' });
-      }, 1000);
+    if (firstLogTimestamp) {
+      firstLogTimestamp.textContent = generateTimestamp();
+    }
+    if (firstLogText) {
+      firstLogText.textContent = `supported me ${totalAmount} so far!`;
+      firstLogText.classList.add('total-received');
     }
   }
   
   // Close notification buttons
-  document.getElementById('close-notification')?.addEventListener('click', () => {
-    const unlockNotification = document.getElementById('unlock-notification');
-    if (unlockNotification) {
-      unlockNotification.classList.remove('visible');
-    }
-  });
   
   document.getElementById('close-thankyou')?.addEventListener('click', () => {
     const thankyouNotification = document.getElementById('thankyou-notification');
@@ -202,55 +128,7 @@ import Layout from '../layouts/Layout.astro';
   });
 
   let totalAmountReceived = 0;
-  let startTime = null;
-  let lastPaymentTime = null;
-  let paymentRate = 0;
-  let totalPayments = 0;
   
-  /** Function to format time as HH:MM:SS */
-  function formatTime(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = Math.floor(seconds % 60);
-    
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  }
-  
-  /** Function to update stream statistics */
-  function updateStreamStats(amount, currency) {
-    const streamTimeEl = document.getElementById('stream-time');
-    const progressEl = document.getElementById('unlock-progress');
-    const percentageEl = document.getElementById('progress-percentage');
-    
-    if (!startTime) {
-      startTime = new Date();
-    }
-    
-    const now = new Date();
-    const elapsedSeconds = (now.getTime() - startTime.getTime()) / 1000;
-    
-    if (streamTimeEl) {
-      streamTimeEl.textContent = formatTime(elapsedSeconds);
-    }
-    
-    // Update last payment time and count
-    if (lastPaymentTime) {
-      const timeSinceLastPayment = (now.getTime() - lastPaymentTime.getTime()) / 1000;
-      // use exponential moving average for smoother rate calculation
-      const alpha = 0.3; // smoothing factor
-      const instantRate = (amount * 60) / timeSinceLastPayment;
-      paymentRate = (alpha * instantRate) + ((1 - alpha) * paymentRate);
-    }
-    lastPaymentTime = now;
-    totalPayments++;
-    
-    if (progressEl && percentageEl) {
-      const percentage = Math.min((totalAmountReceived / 2) * 100, 100);
-      progressEl.style.width = `${percentage}%`;
-      percentageEl.textContent = `${percentage.toFixed(2)}%`;
-    }
-  }
-
   window.addEventListener('monetization', (ev) => {
     console.log(ev);
     
@@ -259,13 +137,12 @@ import Layout from '../layouts/Layout.astro';
     )
     if (monetizationLinks && monetizationLinks.relList.supports('monetization')) {
       console.log('Monetization is supported');
-      streamStats.style.display = 'block';
     }
 
     try {
-      if (ev && ev.amountSent) {
-        const amountSent = ev.amountSent.value || '0';
-        const currency = ev.amountSent.currency || 'USD';
+      if (ev && (ev as any).amountSent) {
+        const amountSent = (ev as any).amountSent.value || '0';
+        const currency = (ev as any).amountSent.currency || 'USD';
         const amount = Number(amountSent);
         
         if (!isNaN(amount)) {
@@ -283,13 +160,8 @@ import Layout from '../layouts/Layout.astro';
 
           addEventToLog(`${formattedTotalAmount}`, `${formattedAmount}`, totalAmountReceived);
           
-          updateStreamStats(amount, currency);
-          
           // show thank you notification for generous payments (> 0.10)
-          // but only if we're not showing the unlock notification (to avoid overlap)
-          const isUnlockingRightNow = totalAmountReceived >= 2 && (totalAmountReceived - amount) < 2;
-          
-          if (amount > 0.10 && !isUnlockingRightNow) {
+          if (amount > 0.10) {
             const thankyouNotification = document.getElementById('thankyou-notification');
             if (thankyouNotification) {
               thankyouNotification.classList.add('visible');
@@ -464,41 +336,6 @@ import Layout from '../layouts/Layout.astro';
     justify-content: center;
   }
   
-  /* Factions Section */
-  .factions {
-    padding: 100px 0;
-    background-color: var(--cyberpunk-darker);
-  }
-  
-  .section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 60px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-  }
-  
-  .faction-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-  }
-  
-  .faction {
-    padding: 30px;
-    transition: all 0.3s ease;
-  }
-  
-  .faction:hover {
-    box-shadow: 0 0 15px var(--cyberpunk-red);
-  }
-  
-  .faction h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: var(--neon-yellow);
-  }
-  
   /* Footer */
   footer {
     background-color: var(--cyberpunk-darker);
@@ -562,107 +399,6 @@ import Layout from '../layouts/Layout.astro';
     font-size: 0.9em;
   }
   
-  /* Stats Container */
-  .stats-container {
-    display: none;
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    width: 280px;
-    z-index: 1000;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-  }
-  
-  .stats-container:hover {
-    opacity: 1;
-  }
-  
-  .stats-panel {
-    background-color: var(--cyberpunk-darker);
-    overflow: hidden;
-  }
-  
-  .stats-header {
-    padding: 10px 15px;
-    border-bottom: 1px solid var(--cyberpunk-red);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    background-color: rgba(0, 240, 255, 0.2);
-  }
-  
-  .stats-content {
-    padding: 15px;
-  }
-  
-  .stat-item {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .stat-label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.8rem;
-  }
-  
-  .stat-value {
-    color: var(--neon-yellow);
-    font-weight: bold;
-    font-family: monospace;
-  }
-  
-  .progress-bar {
-    height: 12px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    margin-top: 15px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-    transition: width 0.5s ease-out;
-  }
-  
-  .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.7rem;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    white-space: nowrap;
-  }
-  
-  /* Unlocked banner */
-  .unlocked-banner {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: rgba(255, 0, 85, 0.2);
-    border: 1px solid var(--cyberpunk-red);
-    animation: pulse 2s infinite alternate;
-  }
-  
-  .unlocked-banner p {
-    margin-top: 10px;
-    color: var(--neon-blue);
-  }
-  
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 5px var(--cyberpunk-red);
-    }
-    100% {
-      box-shadow: 0 0 20px var(--cyberpunk-red);
-    }
-  }
-
   /* Media Queries */
   @media (max-width: 768px) {
     h1 {
@@ -677,14 +413,6 @@ import Layout from '../layouts/Layout.astro';
       display: block;
       width: 100%;
       margin-bottom: 5px;
-    }
-    
-    .faction-list {
-      grid-template-columns: 1fr;
-    }
-    
-    .section-title {
-      font-size: 2rem;
     }
     
     .notification-container {
