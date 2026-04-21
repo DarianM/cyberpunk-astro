@@ -1,0 +1,226 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+const articles = [
+  {
+    number: "01",
+    icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="22" fill="#eef2ff"/>
+      <path d="M24 24 L24 2 A22 22 0 1 1 2 24 Z" fill="#6366f1" opacity="0.85"/>
+      <circle cx="24" cy="24" r="22" stroke="#6366f1" stroke-width="1.5"/>
+      <line x1="24" y1="2" x2="24" y2="46" stroke="white" stroke-width="1.5" opacity="0.6"/>
+      <line x1="2" y1="24" x2="46" y2="24" stroke="white" stroke-width="1.5" opacity="0.6"/>
+    </svg>`,
+    title: "Fractions Are Division",
+    description: "A fraction is a ratio and a division problem in disguise. 3/4 means 3 divided by 4 — that single idea unifies fractions, decimals, and percentages.",
+  },
+  {
+    number: "02",
+    icon: `<img src="/graph.png" width="48" height="48" alt="Algebra graph icon" style="object-fit:contain;" />`,
+    title: "Algebra: Thinking in Unknowns",
+    description: "Algebra replaces numbers with letters so one rule covers infinite cases. An equation is a balance — what you do to one side, you must do to the other.",
+  },
+  {
+    number: "03",
+    icon: `<img src="/vertex.png" width="48" height="48" alt="Geometry vertex icon" style="object-fit:contain;" />`,
+    title: "Geometry & Visual Proof",
+    description: "Geometry is unusual — most of its truths can be seen, not just calculated. The Pythagorean theorem, for instance, can be proved by rearranging shapes alone.",
+  },
+];
+---
+
+<Layout title="Math Introductions — Learn the Fundamentals">
+  <main>
+    <header>
+      <div class="header-inner">
+        <span class="eyebrow">Math Introductions</span>
+        <h1>Learn the Fundamentals</h1>
+        <p class="tagline">A true master is an eternal student</p>
+      </div>
+    </header>
+
+    <section class="articles">
+      <div class="section-inner">
+        <h2>Getting Started</h2>
+        <p class="section-intro">
+          Three short reads to build your foundation. No prior knowledge needed, just curiosity.
+        </p>
+
+        <div class="article-list">
+          {articles.map((article) => (
+            <article class="card">
+              <div class="card-icon" set:html={article.icon} />
+              <span class="card-number">{article.number}</span>
+              <div class="card-body">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Have a question? Bring it to class.</p>
+  </footer>
+</Layout>
+
+<style>
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #fff;
+    padding: 2.75rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .header-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 1.25rem;
+  }
+
+  header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    opacity: 0.82;
+    font-weight: 400;
+  }
+
+  /* ── Articles section ── */
+  .articles {
+    padding: 4rem 2rem 5rem;
+  }
+
+  .section-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .articles h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6366f1;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-intro {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Cards ── */
+  .article-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(79, 70, 229, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    margin-bottom: 0.25rem;
+  }
+
+  .card-icon svg {
+    display: block;
+  }
+
+  .card-number {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #6366f1;
+    background-color: #eef2ff;
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    align-self: flex-start;
+  }
+
+  .card-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    letter-spacing: -0.01em;
+  }
+
+  .card-body p {
+    font-size: 0.82rem;
+    color: #6b7280;
+    line-height: 1.7;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 1.75rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    border-top: 1px solid #e5e7eb;
+    background-color: #fff;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .article-list {
+      grid-template-columns: 1fr;
+    }
+
+    header {
+      padding: 2rem 1.5rem 1.75rem;
+    }
+
+    .articles {
+      padding: 2.5rem 1.25rem 3.5rem;
+    }
+  }
+</style>
+
+<script>
+  window.addEventListener('monetization', (event) => {
+    const e = event as CustomEvent & { amountSent: { value: string; currency: string } };
+    const { value, currency } = e.amountSent;
+    console.log(`Browser sent ${currency} ${value}.`);
+
+    const linkElem = e.target as HTMLLinkElement | null;
+    console.log('for link element:', linkElem, linkElem?.href);
+  });
+</script>
